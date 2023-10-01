@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="utf-8" />
+	<title>Audio/Video Player Online</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="This a Demo." />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<meta name="theme-color" content="#29434d" />
+	<meta name="msapplication-TileColor" content="#29434d" />
+	<meta name="msapplication-TileImage" content="images/icons/mstile-150x150.png" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="apple-mobile-web-app-title" content="Progressive Web Application" />
+	<meta name="application-name" content="Progressive Web Application" />
+	<link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" href="images/icons/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/icons/favicon-16x16.png" sizes="16x16" />
+	<link rel="manifest" href="manifest.json" />
+	<link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
 </head>
-<script src="index.js"></script>
-<link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+
 <body>
-    <video id="video" class="video-js" controls preload="auto" width="640" height="480">
-        <source src="https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8" type="application/x-mpegURL" />
-    </video>
-    <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
-    <script>
-        var player = videojs('video');
-        player.play();
-    </script>
+	<video class="video-js" controls preload="auto" width="640" height="264" data-setup="{}"
+		cloud-src="https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8">
+		<p class="vjs-no-js">
+			To view this video please enable JavaScript, and consider upgrading to a
+			web browser that
+			<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+		</p>
+	</video>
+	<div isInstalled="0"></div>
+	<script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+    <!--script src="index.js"></script-->
+	<script>
+        const videos = document.getElementsByClassName('video-js');
+        Array.from(videos).forEach(function (item) {
+            var player = videojs(item);
+            player.src({
+                src: item.getAttribute('cloud-src'),
+                type: "application/x-mpegURL"
+            });
+        });
+	</script>
 </body>
-</html>
