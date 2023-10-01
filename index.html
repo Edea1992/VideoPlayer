@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet">
-<script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+<link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+
 <body>
     <video-js id="video" class="video-js" controls preload="false" autoplay="false" width="640" height="480">
         <source src="https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8" type="application/x-mpegURL"></source>
     </video-js>
-    <script defer>
+    <script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
+    <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("sw.js").then(registration => {
                 const player = videojs(video)
