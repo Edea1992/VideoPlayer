@@ -13,18 +13,8 @@
         <source src="m3u8" type="application/x-mpegURL">
     </video>
     <script>
-        const overrideNative = false
-        const player = videojs('my-video', {
-            html5: {
-                hls: {
-                    overrideNative: overrideNative
-                },
-                nativeVideoTracks: !overrideNative,
-                nativeAudioTracks: !overrideNative,
-                nativeTextTracks: !overrideNative
-            }
-        })
-        player.play()
+        const player = videojs('my-video')
+        //player.play()
     </script>
 </body>
 </html>
