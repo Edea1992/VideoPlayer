@@ -9,7 +9,7 @@
 <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
 <script src="index.js"></script>
 <body>
-    <video id="video" class="video-js" controls preload="auto" width="640" height="360">
+    <video id="video" class="video-js" controls preload="auto" autoplay="false" width="640" height="360">
     </video>
     <script>
         const video = document.getElementById("video")
@@ -20,8 +20,6 @@
             src: "https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8",
             type: "application/x-mpegURL"
         })
-
-        player.play()
     </script>
 </body>
 </html>
