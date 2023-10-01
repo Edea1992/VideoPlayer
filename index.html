@@ -12,13 +12,16 @@
     <video id="player" class="video-js" controls preload="auto" width="640" height="360">
     </video>
     <script>
-        const player = videojs("player")
-        setTimeout(() => {
-                player.src({
-                src: "https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8",
-                type: "application/x-mpegURL"
-            })
-        }, 1000)
+        const video = document.getElementById("player")
+        
+        const player = videojs(video)
+        
+        player.src({
+            src: "https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8",
+            type: "application/x-mpegURL"
+        })
+
+        player.play()
     </script>
 </body>
 </html>
