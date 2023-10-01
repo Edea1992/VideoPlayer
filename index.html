@@ -9,13 +9,12 @@
 <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
 <script src="index.js"></script>
 <body>
-    <video id="my-video" class="video-js" controls preload="auto" autoplay="false" width="640" height="360">
-        <source src="https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8" type="application/x-mpegURL">
+    <video id="my-video" class="video-js" controls preload="auto" width="640" height="360">
     </video>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const video = videojs("my-video")
-        })
+        const video = videojs("my-video")
+        video.src = "https://gist.githubusercontent.com/Edea1992/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8" 
+        video.type = "application/x-mpegURL"
     </script>
 </body>
 </html>
