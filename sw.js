@@ -44,7 +44,7 @@ const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 //     }
 // })
 
-self.addEventListener("fetch", function(event) {
+self.addEventListener("fetch", (event) => {
     const matches = event.request.url.match(regex)
     if (matches) {
         event.respondWith((async () => {
@@ -68,10 +68,11 @@ self.addEventListener("fetch", function(event) {
             )
         })())
     } else {
-        event.respondWith(
-            caches.match(event.request).then(function(response) {
-                return response || fetch(event.request)
-            })
-        )
+        event.respondWith(fetch(event.request))
+        // event.respondWith(
+        //     caches.match(event.request).then(function(response) {
+        //         return response || fetch(event.request)
+        //     })
+        // )
     }
 })
