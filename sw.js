@@ -1,4 +1,4 @@
-import { createPartialResponse } from "workbox-range-requests"
+importScripts("workbox-range-requests.js")
 
 const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 
