@@ -1,5 +1,3 @@
-const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
-
 // self.addEventListener("fetch", function(event) {
 //     if (event.request.url.match(regex)) {
 //         event.respondWith((async () => {
@@ -44,6 +42,8 @@ const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 //     }
 // })
 
+const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
+
 self.addEventListener("fetch", (event) => {
     const matches = event.request.url.match(regex)
     if (matches) {
@@ -53,7 +53,7 @@ self.addEventListener("fetch", (event) => {
             if (url.endsWith("m3u8")) {
                 const m3u8 = await (await fetch(url)).text()
                 
-                const range = event.request.headers.get("Content-Range")
+                const range = event.request.headers.get("Range")
                 if (range) {
                     const parts = range.replace("bytes=", "").split("-")
                     const start = parseInt(parts[0], 10)
@@ -98,7 +98,7 @@ self.addEventListener("fetch", (event) => {
 
             const data = new Uint8Array([...atob(await (await fetch(url)).text())].map(char => char.charCodeAt(0)))
             
-            const range = event.request.headers.get("Content-Range")
+            const range = event.request.headers.get("Range")
             if (range) {
                 const parts = range.replace("bytes=", "").split("-")
                 const start = parseInt(parts[0], 10)
