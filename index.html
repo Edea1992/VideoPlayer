@@ -5,16 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<script src="index.js"></script>
 <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
 <body>
     <video id="video" class="video-js" controls preload="auto" width="640" height="480">
-        <source src="https://pilipili.com/video/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8" type="application/x-mpegURL" />
+        
     </video>
-    <script src="https://vjs.zencdn.net/8.5.2/video.js"></script>
     <script>
-        const player = videojs('video')
-        player.play()
+        function loadVideoJs() {
+            const script = document.createElement("script")
+            script.src = "https://vjs.zencdn.net/8.5.2/video.min.js"
+            script.onload = initializeVideoPlayer
+            document.head.appendChild(script)
+        }
+
+        function initializeVideoPlayer() {
+            const player = videojs("video")
+            player.src({
+                src: "https://pilipili.com/video/aa8d9c0f256c7b2d0a4ad9c5100613cc/raw/e2c6c7d23e39c3639e2e2dbf42858c598a1edecf/m3u8",
+                type: "application/x-mpegURL"
+            })
+        }
+
+        navigator.serviceWorker.register("sw.js")
+ 
+        navigator.serviceWorker.ready.then(() => {
+            loadVideoJs()
+        })
     </script>
 </body>
 </html>
