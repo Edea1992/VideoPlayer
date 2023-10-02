@@ -51,7 +51,7 @@ self.addEventListener("fetch", (event) => {
             const url = `https://gist.githubusercontent.com/Edea1992/${matches[1]}`
 
             if (url.endsWith("m3u8")) {
-                const m3u8 = await (await fetch(url)).text()
+                const m3u8 = new TextEncoder.encode(await (await fetch(url)).text())
                 
                 const range = event.request.headers.get("Range")
                 if (range) {
@@ -82,7 +82,7 @@ self.addEventListener("fetch", (event) => {
                 return new Response(
                     new ReadableStream({
                         start(controller) {
-                            controller.enqueue(m3u8)
+                            controller.enqueue(chunk)
                             controller.close()
                         }
                     }),
