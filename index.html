@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
+
 <body>
     <video id="video" class="video-js" controls preload="auto" width="640" height="480">
-        
+
     </video>
     <script>
         function loadVideoJs() {
@@ -26,11 +28,22 @@
             })
         }
 
-        navigator.serviceWorker.register("sw.js")
- 
-        navigator.serviceWorker.ready.then(() => {
+        navigator.serviceWorker.register("sw.js").then((reg) => {
+            return new Promise((resolve) => {
+                if (reg.active) {
+                    resolve()
+                } else {
+                    reg.addEventListener('updatefound', () => {
+                        if (reg.active) {
+                            resolve()
+                        }
+                    })
+                }
+            })
+        }).then(() => {
             loadVideoJs()
         })
     </script>
 </body>
+
 </html>
