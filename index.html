@@ -31,15 +31,8 @@
 
         navigator.serviceWorker.register("sw.js").then((reg) => {
             return new Promise((resolve) => {
-                if (reg.active) {
-                    resolve()
-                } else {
-                    reg.addEventListener('updatefound', () => {
-                        if (reg.active) {
-                            resolve()
-                        }
-                    })
-                }
+                while (!reg.active) {}
+                resolve()
             })
         }).then(() => {
             loadVideoJs()
