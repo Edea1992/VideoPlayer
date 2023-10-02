@@ -3,7 +3,7 @@
 //         event.respondWith((async () => {
 //             const response = await fetch("http://f0.0sm.com/node0/2023/09/8651804F35D8D4E5-b95b76e27b2bc797.bmp")
 //             const reader = response.body.getReader()
-            
+
 //             const bytes = new Uint8Array(1024 * 1024 * 5)
 //             let loadedBytes = 0
 //             while (true) {
@@ -44,6 +44,12 @@
 
 const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 
+self.addEventListener('activate', function (event) {
+    event.waitUntil(
+        clients.claim()
+    )
+})
+
 self.addEventListener("fetch", (event) => {
     const matches = event.request.url.match(regex)
     if (matches) {
@@ -51,8 +57,8 @@ self.addEventListener("fetch", (event) => {
             const url = `https://gist.githubusercontent.com/Edea1992/${matches[1]}`
 
             if (url.endsWith("m3u8")) {
-                const m3u8 = new TextEncoder().encode(await (await fetch(url, { })).text())
-                
+                const m3u8 = new TextEncoder().encode(await (await fetch(url, {})).text())
+
                 const range = event.request.headers.get("Range")
                 if (range) {
                     const parts = range.replace("bytes=", "").split("-")
@@ -69,10 +75,10 @@ self.addEventListener("fetch", (event) => {
                         }),
                         {
                             headers: {
-                                "Accept-Ranges":  "bytes",
+                                "Accept-Ranges": "bytes",
                                 "Content-Length": chunkSize,
-                                "Content-Range":  `bytes ${start}-${end}/${m3u8.length}`,
-                                "Content-Type":  "application/x-mpegURL"
+                                "Content-Range": `bytes ${start}-${end}/${m3u8.length}`,
+                                "Content-Type": "application/x-mpegURL"
                             },
                             status: 206
                         }
@@ -88,16 +94,16 @@ self.addEventListener("fetch", (event) => {
                     }),
                     {
                         headers: {
-                            "Accept-Ranges":  "bytes",
+                            "Accept-Ranges": "bytes",
                             "Content-Length": m3u8.length,
-                            "Content-Type":  "application/x-mpegURL"
+                            "Content-Type": "application/x-mpegURL"
                         }
                     }
                 )
             }
 
             const data = new Uint8Array([...atob(await (await fetch(url)).text())].map(char => char.charCodeAt(0)))
-            
+
             const range = event.request.headers.get("Range")
             if (range) {
                 const parts = range.replace("bytes=", "").split("-")
@@ -114,10 +120,10 @@ self.addEventListener("fetch", (event) => {
                     }),
                     {
                         headers: {
-                            "Accept-Ranges":  "bytes",
+                            "Accept-Ranges": "bytes",
                             "Content-Length": chunkSize,
-                            "Content-Range":  `bytes ${start}-${end}/${data.length}`,
-                            "Content-Type":  "video/mp2t"
+                            "Content-Range": `bytes ${start}-${end}/${data.length}`,
+                            "Content-Type": "video/mp2t"
                         },
                         status: 206
                     }
@@ -133,16 +139,16 @@ self.addEventListener("fetch", (event) => {
                 }),
                 {
                     headers: {
-                        "Accept-Ranges":  "bytes",
+                        "Accept-Ranges": "bytes",
                         "Content-Length": data.length,
-                        "Content-Type":  "video/mp2t"
+                        "Content-Type": "video/mp2t"
                     }
                 }
             )
         })())
     } else {
         event.respondWith(
-            caches.match(event.request).then(function(response) {
+            caches.match(event.request).then(function (response) {
                 return response || fetch(event.request)
             })
         )
