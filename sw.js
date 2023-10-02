@@ -46,10 +46,10 @@ const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 //     }
 // })
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch",async (event) => {
     const matches = event.request.url.match(regex)
     if (matches) {
-        event.respondWith(createPartialResponse(event.request, ((async () => {
+        event.respondWith(createPartialResponse(event.request,await (async () => {
             const response = await fetch(`https://gist.githubusercontent.com/Edea1992/${matches[1]}`)
             const bytes = new Uint8Array([...atob(await response.text())].map(char => char.charCodeAt(0)))
 
@@ -68,12 +68,8 @@ self.addEventListener("fetch", (event) => {
                     }
                 }
             )
-        })())))
+        })()))
     } else {
-        event.respondWith(
-            createPartialResponse(event.request, caches.match(event.request).then(function(response) {
-                return response || fetch(event.request)
-            }))
-        )
+        event.respondWith(createPartialResponse(event.request, await fetch(event.request)))
     }
 })
