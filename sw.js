@@ -1,5 +1,3 @@
-importScripts("workbox-range-requests.js")
-
 const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 
 // self.addEventListener("fetch", function(event) {
@@ -49,7 +47,7 @@ const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 self.addEventListener("fetch",async (event) => {
     const matches = event.request.url.match(regex)
     if (matches) {
-        event.respondWith(createPartialResponse(event.request,await (async () => {
+        event.respondWith(async () => {
             const response = await fetch(`https://gist.githubusercontent.com/Edea1992/${matches[1]}`)
             const bytes = new Uint8Array([...atob(await response.text())].map(char => char.charCodeAt(0)))
 
@@ -68,8 +66,8 @@ self.addEventListener("fetch",async (event) => {
                     }
                 }
             )
-        })()))
+        })
     } else {
-        event.respondWith(createPartialResponse(event.request, await fetch(event.request)))
+        event.respondWith(fetch(event.request))
     }
 })
