@@ -28,10 +28,12 @@
             })
             player.play()
         }
-
         
         navigator.serviceWorker.register("sw.js")
-        navigator.serviceWorker.ready.then(() => {
+        navigator.serviceWorker.ready.then((registration) => {
+            while (registration.active.state !== "activated") {
+                console.log("waiting for activation")
+            }
             loadVideoJs()
         })
     </script>
