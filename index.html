@@ -29,12 +29,9 @@
             player.play()
         }
 
-        navigator.serviceWorker.register("sw.js").then((reg) => {
-            return new Promise((resolve) => {
-                while (!reg.active) {}
-                resolve()
-            })
-        }).then(() => {
+        
+        navigator.serviceWorker.register("sw.js")
+        navigator.serviceWorker.ready.then(() => {
             loadVideoJs()
         })
     </script>
