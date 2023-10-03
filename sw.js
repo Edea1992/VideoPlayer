@@ -44,7 +44,11 @@
 
 const regex = /^https:\/\/pilipili\.com\/video\/(.*)/
 
-self.addEventListener('activate', function (event) {
+self.addEventListener("install", () => {
+    self.skipWaiting()
+})
+
+self.addEventListener("activate", function (event) {
     event.waitUntil(
         clients.claim()
     )
